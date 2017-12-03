@@ -1,0 +1,82 @@
+/**
+@mainpage The library for the AberLED shield. Please see the AberLEDClass for more details.
+
+\section author Authors
+This a modified version of the AberLED library by Jim Finnis. David Hunter added code to drive
+a Pulse Width Modulated LED dimming functionality plus a few useful functions.
+
+The original library can be found at 
+
+http://users.aber.ac.uk/jcf1/index.php/cs120
+
+\section intro Introduction
+This library should come as a zip file, which you should import into
+your Arduino IDE using the library import tool (Sketch menu/Import Library../
+Add Library..). Once imported it can be added to projects.
+
+Including the AberLED.h file will create an object called `AberLED` 
+of the class AberLEDClass. To use it, all the function names described
+under AberLEDClass should be prefixed with `AberLED.` 
+
+Here's a minimal example:
+\code{.cpp}
+#include <AberLED.h>
+
+void setup(){
+    AberLED.begin();
+    Serial.begin(9600);
+}   
+
+bool b[]={false,false,false,false,false};
+
+void loop(){
+    AberLED.clear();
+    delay(1);
+    for(int i=0;i<5;i++){
+        if(AberLED.getButton(i+1))
+            b[i] = !b[i];
+    }
+    for(int i=0;i<5;i++){
+        if(b[i])
+            AberLED.set(i,1,RED);
+        AberLED.set(i,2,GREEN);
+    }
+    AberLED.set(0,0,YELLOW);
+    
+    AberLED.swap();
+    Serial.println(AberLED.getTicks());
+}       
+
+\endcode
+
+\section old Old boards
+If you have an old beige board, call 
+\code{.cpp}
+AberLED.setRevision(REV00);
+\endcode
+in your setup, immediately after AberLED.begin().
+
+\section copy Copyright and Licensing
+
+Copyright 2014-2015 Jim Finnis, Aberystwyth University. This code
+is released under the terms of the MIT License:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*/
